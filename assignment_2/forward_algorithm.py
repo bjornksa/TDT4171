@@ -8,7 +8,7 @@ def forward(T, O, f):
     return f_next
 
 
-def forward_smoothing(evidence):
+def forward_filtering(evidence):
     """ Run forward smoothing for all timesteps with given evidence """
 
     timesteps = len(evidence) + 1
@@ -34,8 +34,8 @@ def main():
     evidence1 = [1, 1]
     evidence2 = [1, 1, 0, 1, 1, 1]
 
-    P_R_2 = forward_smoothing(evidence1)
-    P_R_5 = forward_smoothing(evidence2)
+    P_R_2 = forward_filtering(evidence1)
+    P_R_5 = forward_filtering(evidence2)
 
     print(P_R_2[-1])
     """ Gives <0.883, 0.117>: 88.3% chance of rain"""
