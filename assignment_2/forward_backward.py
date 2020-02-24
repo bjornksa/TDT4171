@@ -47,6 +47,8 @@ def forward_backward(evidence, prior):
         backward_message = backward(transition_matrix, O, backward_message)
         backward_messages[i] = backward_message
 
+    smoothed_estimates = smoothed_estimates[1:] # Remove 0th time step
+    backward_messages = backward_messages[1:]
     return smoothed_estimates, forward_messages, backward_messages
 
 
@@ -58,14 +60,33 @@ def main():
     print("Estimates:")
     for f in estimates:
         print("<{0:.3f}, {1:.3f}>".format(f[0,0], f[1,0])) #print the rounded forward messages on the form <0.xxx, 0.yyy>
+        """ Gives the following:
+        <0.867, 0.133>
+        <0.820, 0.180>
+        <0.307, 0.693>
+        <0.820, 0.180>
+        <0.867, 0.133>"""
 
     print("\nForward messages:")
     for f in forwards:
         print("<{0:.3f}, {1:.3f}>".format(f[0,0], f[1,0])) #print the rounded forward messages on the form <0.xxx, 0.yyy>
+        """ Gives the following:
+        <0.500, 0.500>
+        <0.818, 0.182>
+        <0.883, 0.117>
+        <0.191, 0.809>
+        <0.731, 0.269>
+        <0.867, 0.133>"""
 
     print("\nBackward messages:")
     for f in backwards:
         print("<{0:.3f}, {1:.3f}>".format(f[0,0], f[1,0])) #print the rounded forward messages on the form <0.xxx, 0.yyy>
+        """ Gives the follwing
+        <0.044, 0.024>
+        <0.066, 0.046>
+        <0.091, 0.150>
+        <0.459, 0.244>
+        <0.690, 0.410>"""
 
 
 main()
