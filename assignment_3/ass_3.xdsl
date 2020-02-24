@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<smile version="1.0" id="Network1" numsamples="1000" discsamples="10000">
+	<nodes>
+		<decision id="Go_skiing">
+			<state id="Skiing" />
+			<state id="Staying_home" />
+		</decision>
+		<cpt id="useful_lecture">
+			<state id="True" />
+			<state id="False" />
+			<parents>Go_skiing</parents>
+			<probabilities>0 1 0.75 0.25</probabilities>
+		</cpt>
+		<cpt id="working">
+			<state id="True" />
+			<state id="False" />
+			<parents>Go_skiing</parents>
+			<probabilities>0.1 0.9 0.6 0.4</probabilities>
+		</cpt>
+		<cpt id="Snow_conditions">
+			<state id="Good" />
+			<state id="Decent" />
+			<state id="Bad" />
+			<probabilities>0.2 0.5 0.3</probabilities>
+		</cpt>
+		<cpt id="Avalanche_risk">
+			<state id="Faregrad_1" />
+			<state id="Faregrad_2" />
+			<state id="Faregrad_3" />
+			<state id="Faregrad_4" />
+			<state id="Faregrad_5" />
+			<parents>Snow_conditions</parents>
+			<probabilities>0.05 0.2 0.3 0.25 0.2 0.15 0.3 0.2500000000000001 0.2000000000000001 0.1 0.3 0.35 0.2000000000000001 0.1 0.05000000000000002</probabilities>
+		</cpt>
+		<cpt id="Avalanche_cast">
+			<state id="Faregrad_1" />
+			<state id="Faregrad_2" />
+			<state id="Faregrad_3" />
+			<state id="Faregrad_4" />
+			<state id="Faregrad_5" />
+			<parents>Avalanche_risk</parents>
+			<probabilities>0.8 0.2 0 0 0 0.1 0.8 0.1 0 0 0 0.1 0.8 0.1 0 0 0 0.1 0.8 0.1 0 0 0 0.2 0.8</probabilities>
+		</cpt>
+		<cpt id="Weather">
+			<state id="Good" />
+			<state id="Decent" />
+			<state id="Bad" />
+			<probabilities>0.3 0.4 0.2999999999999999</probabilities>
+		</cpt>
+		<cpt id="Weather_froecast">
+			<state id="Good" />
+			<state id="Decent" />
+			<state id="Bad" />
+			<parents>Weather</parents>
+			<probabilities>0.5 0.25 0.25 0.25 0.5 0.25 0.25 0.25 0.5</probabilities>
+		</cpt>
+		<utility id="Home_util">
+			<parents>useful_lecture working</parents>
+			<utilities>100 60 75 10</utilities>
+		</utility>
+		<utility id="Ski_enjoyment">
+			<parents>Go_skiing Snow_conditions Weather</parents>
+			<utilities>100 90 70 80 70 50 70 50 30 0 0 0 0 0 0 0 0 0</utilities>
+		</utility>
+		<utility id="Risk">
+			<parents>Go_skiing Avalanche_risk</parents>
+			<utilities>20 40 60 80 100 0 0 0 0 0</utilities>
+		</utility>
+		<mau id="Utility">
+			<parents>Home_util Ski_enjoyment Risk</parents>
+			<weights>0.5 1 -0.7</weights>
+		</mau>
+		<cpt id="reported_conditions">
+			<state id="Good" />
+			<state id="Decent" />
+			<state id="Bad" />
+			<parents>Snow_conditions</parents>
+			<probabilities>0.8 0.15 0.05 0.2000000000000001 0.7000000000000001 0.1 0.1 0.2 0.7</probabilities>
+		</cpt>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 2.0.5590.0" name="Network1" faultnameformat="nodestate">
+			<node id="useful_lecture">
+				<name>Useful lecture</name>
+				<interior color="ffcc99" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>375 340 444 383</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="working">
+				<name>Getting work done</name>
+				<interior color="ffcc99" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>528 341 626 382</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="Avalanche_cast">
+				<name>Avalanche forecast</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>709 206 780 250</position>
+				<barchart active="true" width="128" height="108" />
+			</node>
+			<node id="Weather_froecast">
+				<name>Weather forecastl</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1039 208 1105 249</position>
+				<barchart active="true" width="128" height="72" />
+			</node>
+			<node id="Snow_conditions">
+				<name>Snow conditions</name>
+				<interior color="ffcc99" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>895 347 946 378</position>
+				<barchart active="true" width="128" height="72" />
+			</node>
+			<node id="Ski_enjoyment">
+				<name>Skiing enjoyment</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>867 474 973 506</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="reported_conditions">
+				<name>Reported Snow conditions</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>895 213 946 244</position>
+				<barchart active="true" width="128" height="72" />
+			</node>
+			<node id="Weather">
+				<name>Weather</name>
+				<interior color="ffcc99" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1039 342 1105 383</position>
+				<barchart active="true" width="128" height="72" />
+			</node>
+			<node id="Home_util">
+				<name>home-utility</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>525 474 629 506</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="Utility">
+				<name>Utility</name>
+				<interior color="00ffff" />
+				<outline color="800000" />
+				<font color="000000" name="Arial" size="8" />
+				<position>689 616 791 648</position>
+				<barchart active="true" width="193" height="73" />
+			</node>
+			<node id="Go_skiing">
+				<name>Go skiing</name>
+				<interior color="00ccff" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>520 199 636 241</position>
+				<barchart active="true" width="157" height="64" />
+			</node>
+			<node id="Avalanche_risk">
+				<name>Avalanche risk</name>
+				<interior color="ffcc99" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>709 340 780 384</position>
+				<barchart active="true" width="128" height="108" />
+			</node>
+			<node id="Risk">
+				<name>Risk</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>710 470 778 513</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+		</genie>
+	</extensions>
+</smile>
