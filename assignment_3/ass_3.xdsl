@@ -11,11 +11,16 @@
 			<parents>Go_skiing</parents>
 			<probabilities>0 1 0.75 0.25</probabilities>
 		</cpt>
+		<cpt id="mandatory_assignment">
+			<state id="True" />
+			<state id="False" />
+			<probabilities>0.1 0.9</probabilities>
+		</cpt>
 		<cpt id="working">
 			<state id="True" />
 			<state id="False" />
-			<parents>Go_skiing</parents>
-			<probabilities>0.1 0.9 0.6 0.4</probabilities>
+			<parents>Go_skiing mandatory_assignment</parents>
+			<probabilities>0.05 0.95 0 1 0.9 0.1 0.6 0.4</probabilities>
 		</cpt>
 		<cpt id="Snow_conditions">
 			<state id="Good" />
@@ -56,11 +61,11 @@
 		</cpt>
 		<utility id="Home_util">
 			<parents>useful_lecture working</parents>
-			<utilities>100 60 75 10</utilities>
+			<utilities>100 60 75 0</utilities>
 		</utility>
 		<utility id="Ski_enjoyment">
 			<parents>Go_skiing Snow_conditions Weather</parents>
-			<utilities>100 90 70 80 70 50 70 50 30 0 0 0 0 0 0 0 0 0</utilities>
+			<utilities>100 90 70 70 60 40 60 50 30 0 0 0 0 0 0 0 0 0</utilities>
 		</utility>
 		<utility id="Risk">
 			<parents>Go_skiing Avalanche_risk</parents>
@@ -68,7 +73,7 @@
 		</utility>
 		<mau id="Utility">
 			<parents>Home_util Ski_enjoyment Risk</parents>
-			<weights>0.5 1 -0.7</weights>
+			<weights>0.5 1 -0.5</weights>
 		</mau>
 		<cpt id="reported_conditions">
 			<state id="Good" />
@@ -101,7 +106,7 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>709 206 780 250</position>
+				<position>705 206 776 250</position>
 				<barchart active="true" width="128" height="108" />
 			</node>
 			<node id="Weather_froecast">
@@ -165,7 +170,7 @@
 				<interior color="00ccff" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>520 199 636 241</position>
+				<position>682 70 798 112</position>
 				<barchart active="true" width="157" height="64" />
 			</node>
 			<node id="Avalanche_risk">
@@ -173,7 +178,7 @@
 				<interior color="ffcc99" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>709 340 780 384</position>
+				<position>705 340 776 384</position>
 				<barchart active="true" width="128" height="108" />
 			</node>
 			<node id="Risk">
@@ -181,9 +186,22 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>710 470 778 513</position>
+				<position>706 470 774 513</position>
 				<barchart active="true" width="128" height="64" />
 			</node>
+			<node id="mandatory_assignment">
+				<name>Mandatory assignment</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>530 205 628 246</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<textbox>
+				<caption>The choice of wether or not to go skiing\n</caption>
+				<font color="000000" name="Arial" size="8" />
+				<position>676 22 868 36</position>
+			</textbox>
 		</genie>
 	</extensions>
 </smile>
