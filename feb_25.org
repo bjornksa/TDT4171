@@ -1,0 +1,134 @@
+#+TITLE: "Machine Learning"
+#+AUTHOR: Bjarne Karne
+
+* Overview
+    - Supervised Learning: Learning a "function"
+        - Correct answers for each instance
+    - Reinforcement Learning: Learning "behaviour"
+        - Reward/punishment in some cases
+        - Less information than Supervised
+        - Eg. chess
+    - Unsupervised learning (not covered)
+
+* Learning goal
+ - Motivation of learning
+ - Formalization of learning
+ - Decision tree formalism
+ - Decision tree learning 
+ - information gain
+ - Overfitting, and how to avoid it
+
+* Why learning
+    Arthur Samuel - let machine play checkers against itself
+    Learning can improve agents decision mechanism to increase Performance
+    Good for unknown/partially unknown problems
+    Useful for system construction, no need to model reality. Just throw agent at it.
+
+    ** Very popular now because
+    - Available data increased
+    - Better hardware
+    - Better methods (deep learning)
+    - Clever formulation of tasks as machine learning problems 
+    Eg. autonomos vehicles...
+
+* Well defined learning problem
+ - Task T
+    Plating checkers
+ - Performance measure P
+    Games won
+ - Experience E
+    Playing against self
+
+* Learning agent 
+    ** Learning element
+    - Type of performance element
+    - Functional component to be learned
+    - Functional component represented
+    - Available feedback
+
+* Inductive learning
+  - Learn a function from examples
+  - Target function *f*,
+  - Examples: pair{x, f(x)}
+
+  Find hypothesis h approx f given *training set* of /examples/
+  h is consistent if it agrees with f on all examples
+
+    ** This is very simplified
+    - Ignores prior knowledge
+    - Assumes deterministic, observable
+    - Assumes given examples
+
+    Basic example: Curve fitting
+
+    Rule of thumb: Maximize consistency AND simplicity
+        Simple models are Better,
+        The world is linear!
+
+* Decision trees
+    Example described by attribute-value pairs (Bool, discrete, continous)
+    Can represent hypotheses with decision trees
+        Setup tree to be consistent with training data
+        Traverse tree to find target for new variables
+    Each internal node tests an attribute
+    Branch corresponds to attribute values
+    Leaf nodes assigns a classification
+
+    ** Convert decision tree to rules
+        Can easily be converted to if-statements
+        Ruleset is complete if all paths to leaf nodes have been traversed
+
+    ** When to use
+        Instances describable by attribute-value pairs
+        Target function discrete valued
+        Disjunct hypotheses
+        Possibly noisy training data
+
+        Examples:
+        - Diagnosis
+        - Giving loans
+
+    ** hypothesis spaces
+        Can represent any function of the inputs
+            Eg. Boolean values: Truth table row -> Path to leaf
+
+        Consistent tree for any (consistent) training set
+        Will probably not generalize to new inputs
+
+        Extremely many different trees for a given training set (2^2^n),
+        We want simple trees
+
+    ** Decision tree learning
+        aim: Find small tree consistent with traing examples
+        Idea: (recursivley) choose "best" attribute as root of subtree
+
+        ~functionDTL(examples, attributes, default)
+            returns a DT 
+            if examples is empty then return default
+            else if allexamples have same class then return class
+            else if attributes is empty then return Mode(examples)
+            else best←Choose-Attribute(attributes,examples)
+                tree←a new decision tree with root-test best
+                for each value v_i of best 
+                    do ex_i←{elements of examples with best=v_i}
+                    subtree←DTL(ex_i,attributes\{best},Mode(examples))
+                    add a branch to tree with label v_i and subtree subtree
+            return tree
+        ~
+
+    ** Choosing an attribute
+        Idea: A good attribute splits the examples into subsets that are (ideally) all positive or all negative
+        Shorter trees have less complex rules -> Easier to handle
+
+* Overfitting
+    A hypothesis is "overfitted" of it is good on the training data, but bad on test data
+    Hypothesis has learned things that are not generalizable
+    Often coincides with size of model
+    generalization ability is the important measure!
+
+    ** Avoid Overfitting
+        - Large amounts of data: 
+            Separate validation data set
+        - Limited data:
+            - Stop learning when performance gradient flattens
+            - Build tree -> Prune until harmful
