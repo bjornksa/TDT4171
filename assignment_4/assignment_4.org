@@ -1,0 +1,20 @@
+#+AUTHOR: Bjørn Kåre
+#+TITLE: TDT4171 Assignment 4
+
+* Problem 1
+** A)
+   - Gabriel is risk-seeking, as his utility function is convex.
+   - Maria is risk-averse, as her utility function is concave.
+   - Both Gustav and Sonja are risk-neutral as they have a linear utility function
+** B)
+|                                    |          Risk-seeking |           Risk-averse |
+|------------------------------------+-----------------------+-----------------------|
+| Lottery                            | [(0.5, 10), (0.5,20]) | [(0.5, -3), (0.5, -6] |
+| Expected utility of lottery        |                  4500 |                 -94.5 |
+| Utility of expected monetary value |                  3375 |               -91.125 |
+
+X^3 is risk-seeking for positive utilities, and risk-averse for negative ones. As we can see, the expected utility of the lottery is higher than the utility of the expected monetary value. 
+And the inverse is true for a lottery with negative rewards. Lottery A has 50% chance of winning 10$ and 50% of 20$. The expected reward is 0.5*10 + 0.5*20 = 15, wich has a utility of 15^3 = 3375.
+But the expected utility of the lottery is 0.5*10^3 + 0.5*20^3 = 4500 wich is higher, as the utility function is nonlinear and convex for positive numbers, thereby weighting larger values more.
+
+The opposite happens with the negative values, where larger negative numbers are "punished" more by the utility function. Here: $0.5*(-3)^3 * 0.5(-6)^3 = -94.5 < (-4.5)^3 = -91.125$
