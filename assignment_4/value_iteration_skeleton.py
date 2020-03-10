@@ -1,4 +1,5 @@
 from typing import List, Any, NamedTuple, Dict, Tuple
+from tabulate import tabulate
 
 # Key = State, Value = Reward
 reward_matrix: Dict[int, float] = {0: -0.1, 1: -0.1, 2: -0.1, 3: -0.1, 4: -0.1, 5: -1.0, 6: -0.1, 7: -1.0, 8: -0.1,
@@ -116,7 +117,6 @@ class Constants(NamedTuple):
 # This variable contains all constants you will need
 constants: Constants = Constants()
 
-
 def value_iteration() -> Any:
     """
     Implement the value iteration algorithm described in Figure 17.4 in the book.
@@ -126,7 +126,22 @@ def value_iteration() -> Any:
 
     :return: The converged utility values of all states.
     """
-    # TODO: Implement the method.
+    gamma = constants.gamma
+    epsilon = constants.epsilon
+    tol = epsilon * (1-gamma)/gamma
+    number_states = constants.number_states
+
+    U = [0 for i in range(16)] # State utilities U[s] := utility of state s
+    U_p = U[:] # U'
+    delta = 2*tol  # To make sure first iteration runs without do{...}while();
+
+    while(delta > tol):
+        U = U_p[:]
+        delta = 0
+        for s in range(number_states):
+            U_p[s] = get_reward(s) + gamma * max( [sum( [get_transition_probability(s, a, sp)*U[sp] for sp in get_outcome_states(s, a)]) for a in moves])
+            delta = max(abs(U_p[s] - U[s]), delta)
+    return U
 
 
 def extract_policy(value_table: Any) -> Any:
@@ -135,7 +150,21 @@ def extract_policy(value_table: Any) -> Any:
     :param value_table: Some data structure containing the converged utility values.
     :return: The extracted policy.
     """
-    # TODO: Implement the method.
+    PI = ["left" for i in range(16)]
+    unchanged = False
+    while not unchanged:
+        unchanged = True
+        for s in range(constants.number_states):
+            for a in moves:
+                action_util = sum( [get_transition_probability(s, a, sp) * value_table[sp] for sp in get_outcome_states(s, a)])
+                policy_util = sum( [get_transition_probability(s, PI[s], sp) * value_table[sp] for sp in get_outcome_states(s, PI[s])])
+
+                if action_util > policy_util:
+                    unchanged = False
+                    PI[s] = a
+    return PI
+
+
 
 
 def main() -> None:
@@ -144,7 +173,22 @@ def main() -> None:
     :return: Nothing.
     """
     value_table = value_iteration()
+    print(tabulate([["{0:.3f}".format(v) for v in value_table[i:i+4]] for i in range(0,16,4)], showindex="always", tablefmt="orgtbl"))
+
+
+    print()
     optimal_policy = extract_policy(value_table)
+
+    move_arrow: Dict[str, str] = {"left": "<", "down": "v", "right": ">", "up": "^"}
+    optimal_arrows = [move_arrow[action] for action in optimal_policy]
+
+    for i in range(constants.number_states):
+        if value_table[i] < -5:
+            optimal_arrows[i] = "x"
+
+    optimal_arrows[-1] = "G"
+
+    print(tabulate([optimal_arrows[i:i+4] for i in range(0,16,4)], showindex="always", tablefmt="orgtbl"))
 
 
 if __name__ == '__main__':
