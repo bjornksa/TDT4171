@@ -1,0 +1,8 @@
+* ex 1
+
+#+include: ./ex_1.py src python
+
+
+This gives an accuracy of about 70%
+
+Dropped ex 2 in favour of staring at the wall during lockdown, but figured I might as well upload what i have
